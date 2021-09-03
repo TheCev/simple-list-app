@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+
+    <span routerLink="/">SimpleList </span>
+  <span class="spacer">
+  </span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLogged; else viewLogout">
+
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <div >
+
+     <button mat-menu-item routerLink="/login">
+        <span>Log In</span>
+      </button>
+
+      <button mat-menu-item routerLink="/join">
+        <span>Join us</span>
+      </button>
+    </div>
+    </mat-menu>
+
+  <ng-template #viewLogout>
+      <button mat-icon-button (click)="onLogout()">
+      
+      <mat-icon>logout</mat-icon>
+
+     </button>
+    </ng-template>
+</mat-toolbar>  
