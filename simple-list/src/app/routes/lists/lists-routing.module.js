@@ -1,0 +1,29 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ListsRoutingModule = void 0;
+var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
+var lists_component_1 = require("./lists.component");
+var tasks_component_1 = require("./tasks/tasks.component");
+var routes = [
+    { path: '', component: lists_component_1.ListsComponent },
+    { path: 'tasks/:listId', component: tasks_component_1.TasksComponent }
+];
+var ListsRoutingModule = /** @class */ (function () {
+    function ListsRoutingModule() {
+    }
+    ListsRoutingModule = __decorate([
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
+        })
+    ], ListsRoutingModule);
+    return ListsRoutingModule;
+}());
+exports.ListsRoutingModule = ListsRoutingModule;
