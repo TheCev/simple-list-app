@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
+  template: `
+<mat-toolbar color="primary">
+	<span class="text">Created by Enrique Rodriguez</span>
+</mat-toolbar>
+  `,
   styleUrls: ['./footer.component.sass']
 })
 export class FooterComponent implements OnInit {

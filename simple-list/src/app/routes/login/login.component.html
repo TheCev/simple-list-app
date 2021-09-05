@@ -1,5 +1,5 @@
 <div class="container">
-	<h2 class="title">Login</h2>
+	<h2 class="title">Log in to your Account</h2>
 </div>
 <form action="" [formGroup]="login" (ngSubmit)="onLogin()">
 	
@@ -10,15 +10,16 @@
 			<input type="text" matInput placeholder="Username" formControlName="username">
 			<mat-icon matPrefix>person</mat-icon>
 		</mat-form-field>
-
+		<mat-error *ngIf="checkUsernameInput()">Username require min 6 characters</mat-error>
 		<mat-form-field appearance="fill">
 			<mat-label>Password*</mat-label>
 			<input type="password" matInput placeholder="Password" formControlName="password">
 			<mat-icon matPrefix>lock</mat-icon>
 
 		</mat-form-field>
+		<mat-error *ngIf="checkPasswordInput()">Password require min 6 characters</mat-error>
 
-		<button mat-flat-button color="primary">Submit</button>
-		<a routerLink="/join">don't you have an account?</a>
+		<button mat-flat-button color="primary" [disabled]="!login.valid">Submit</button>
+		<a routerLink="/join" class="link">don't you have an account?</a>
 	</div>
 </form>

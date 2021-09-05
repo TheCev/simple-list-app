@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import {Observable, throwError, BehaviorSubject } from 'rxjs'
 import { map, catchError } from 'rxjs/operators'
-import { UserResponse } from '../../routes/lists/interfaces/task.interface'
+import { UserResponse } from 'src/app/routes/lists/interfaces/task.interface'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router'
 

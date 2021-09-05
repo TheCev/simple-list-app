@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListService } from 'src/app/shared/services/list.service';
+import { ListService } from 'src/app/services/list.service';
 import { Task, List } from 'src/app/routes/lists/interfaces/task.interface';
 import {Router, ActivatedRoute, ParamMap } from '@angular/router';
 

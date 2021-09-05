@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ListService } from 'src/app/shared/services/list.service';
+import { ListService } from 'src/app/services/list.service';
 import { List } from 'src/app/routes/lists/interfaces/task.interface'
 import { MatDialog } from '@angular/material/dialog'
 import { DeleteDialogComponent } from 'src/app/routes/lists/delete-dialog/delete-dialog.component'
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { AuthService } from '../../shared/services/auth.service'
+import { AuthService } from '../../services/auth.service'
 import {JwtHelperService } from '@auth0/angular-jwt'
 import { catchError} from 'rxjs/operators'
+
 const helper = new JwtHelperService()
 
 @Component({ 

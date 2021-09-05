@@ -14,9 +14,7 @@ export const checkJwt = (req: Request, res: Response, next:NextFunction) => {
 	//if there is'nt token notify
 	if(!req.headers.authorization){
 		return res.status(401).json({message:"Not authorization"}) 
-	}
-Arreglar pagina de inicio
-
+	}
 	//verify token, if occur an error notify
 	try{
 

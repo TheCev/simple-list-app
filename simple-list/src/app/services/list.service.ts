@@ -16,7 +16,8 @@ export class ListService {
 	
 	private handleError(error:HttpErrorResponse){
 		
-			console.error('An error ocurred: ', error.error.message )
+			if(error.error.message) console.error('An error ocurred: ', error.error.message )
+
 			window.alert( error.error.message )
 			 return throwError('SOMETHING BAD HAPPENED')
 		
@@ -27,8 +28,8 @@ export class ListService {
 		
 	}
 	private httpOptions = {
-		headers:
-			{'Authorization': 'Bearer ' + this.token }
+		headers:new HttpHeaders(
+			{'Authorization': 'Bearer ' + this.token })
 		}
 
 	getList(listId):Observable<any>{

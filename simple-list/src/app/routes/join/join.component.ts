@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import {AuthService} from '../../shared/services/auth.service'
+import {AuthService} from 'src/app/services/auth.service'
 import { Router } from '@angular/router'
 import { comparePasswords } from './join.validator'
 import { Subscription } from 'rxjs'
@@ -10,15 +10,12 @@ import { Subscription } from 'rxjs'
   templateUrl:'join.component.html',
   styleUrls: ['./join.component.sass']
 })
-export class JoinComponent implements OnInit {
+export class JoinComponent {
 
   constructor(
     private authSvc: AuthService,
     private router: Router
     ) { }
-
-  ngOnInit(): void {
-  }
 
   join = new FormGroup({
   	username : new FormControl('', [Validators.required, Validators.minLength(6)]),

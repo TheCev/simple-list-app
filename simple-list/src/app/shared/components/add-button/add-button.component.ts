@@ -3,7 +3,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import {AddListDialogComponent } from '../../../routes/lists/add-list-dialog/add-list-dialog.component'
 @Component({
   selector: 'app-add-button',
-  templateUrl: './add-button.component.html',
+  template: `
+  <button mat-icon-button (click)="openDialog()">
+   <mat-icon color="primary">add_circle</mat-icon>
+ </button>`,
   styleUrls: ['./add-button.component.sass']
 })
 export class AddButtonComponent implements OnInit {

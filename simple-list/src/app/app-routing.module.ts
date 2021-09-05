@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from 'src/app/routes/page-not-found/page-not-found.component'
-import { CheckLoginGuard } from './shared/check-login.guard';
-import { CheckUnLoginGuard } from './shared/check-unlogin.guard'
-import { HomeComponent } from './routes/home/home.component'
+import { CheckLoginGuard } from './guards/check-login.guard';
+import { CheckUnLoginGuard } from './guards/check-unlogin.guard';
+import { HomeComponent } from './routes/home/home.component';
 const routes: Routes = [
 	{
 		path: '', component: HomeComponent, canActivate:[CheckLoginGuard]
