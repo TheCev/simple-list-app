@@ -13,7 +13,7 @@ var checkJwt = function (req, res, next) {
     }
     //verify token, if occur an error notify
     try {
-        jwtPayload = jwt.verify(token, "secret");
+        jwtPayload = jwt.verify(token, process.env.SECRET_KEY);
         res.locals.jwtPayload = jwtPayload;
     }
     catch (e) {
@@ -22,7 +22,7 @@ var checkJwt = function (req, res, next) {
     //obtain data from jwtPayload
     var userId = jwtPayload.userId, username = jwtPayload.username;
     //create newToken for send on the headers the data
-    var newToken = jwt.sign({ userId: userId, username: username }, "secret", { expiresIn: '1h' });
+    var newToken = jwt.sign({ userId: userId, username: username }, process.env.SECRET_KEY, { expiresIn: '1h' });
     res.setHeader('token', newToken);
     //this is for receive the token header
     res.setHeader('access-control-expose-headers', 'token');

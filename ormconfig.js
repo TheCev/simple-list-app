@@ -1,10 +1,14 @@
-{
+const dotenv = require('dotenv')
+
+dotenv.config()
+
+module.exports =  {
    "type": "mysql",
-   "host": "bqubtioq9kctknwrnqe0-mysql.services.clever-cloud.com",
-   "port": 3306,
-   "username": "ucvcj0qcrsp01mat",
-   "password": "mMTmRKH9b4KeGes8UFCc",
-   "database": "bqubtioq9kctknwrnqe0",
+   "host": process.env.DB_HOST,
+   "port": process.env.DB_PORT,
+   "username": process.env.DB_USERNAME,
+   "password": process.env.DB_PASSWORD,
+   "database": process.env.DB_DATABASE,
    "synchronize": true,
    "logging": false,
    "entities": [

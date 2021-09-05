@@ -14,11 +14,13 @@ export const checkJwt = (req: Request, res: Response, next:NextFunction) => {
 	//if there is'nt token notify
 	if(!req.headers.authorization){
 		return res.status(401).json({message:"Not authorization"}) 
-	}
+	}
+Arreglar pagina de inicio
+
 	//verify token, if occur an error notify
 	try{
 
-		jwtPayload = <any>jwt.verify(token,"secret");
+		jwtPayload = <any>jwt.verify(token, process.env.SECRET_KEY );
 		res.locals.jwtPayload = jwtPayload;
 
 	}catch(e){
@@ -28,7 +30,7 @@ export const checkJwt = (req: Request, res: Response, next:NextFunction) => {
 	//obtain data from jwtPayload
 	const {userId, username} = jwtPayload;
 	//create newToken for send on the headers the data
-	const newToken = jwt.sign({userId, username}, "secret" , {expiresIn:'1h'})
+	const newToken = jwt.sign({userId, username}, process.env.SECRET_KEY, {expiresIn:'1h'})
 	res.setHeader('token', newToken)
 	//this is for receive the token header
 	res.setHeader('access-control-expose-headers', 'token')
