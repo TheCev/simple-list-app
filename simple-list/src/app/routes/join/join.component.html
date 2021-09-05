@@ -1,6 +1,6 @@
 <div class="container">
 	<h2 class="title">
-		 Join
+		 Create an Account
 	</h2>
 </div>
 
@@ -14,21 +14,36 @@
 		<input type="text" matInput placeholder="Username" formControlName="username">
 		<mat-icon matPrefix>person</mat-icon>
 	</mat-form-field>
+		<mat-error *ngIf="checkUsername()">The username require min 6 characters</mat-error>
 	
 		<mat-form-field appearance="fill">
 		<mat-label>Email*</mat-label>
-		<input type="text" matInput placeholder="Email" formControlName="email">
+		<input type="email" matInput placeholder="Email" formControlName="email" required>
 		<mat-icon matPrefix>mail</mat-icon>
+		
 	</mat-form-field>
+	<mat-error *ngIf="checkEmail()">Insert a valid email</mat-error>
 	
 	
 		<mat-form-field appearance="fill">
 		<mat-label>Password*</mat-label>
-		<input type="password" matInput placeholder="Password" formControlName="password">
+		<input type="password" matInput placeholder="Password" formControlName="password" minlength="6" required>
 		<mat-icon matPrefix>lock</mat-icon>
 	</mat-form-field>
-	<button mat-flat-button color="primary">Submit</button>
-	<a routerLink="/login">do you have an account already?</a>
+
+	<mat-form-field appearance="fill">
+		<mat-label>Confirm Password*</mat-label>
+		<input type="password" matInput placeholder="Confirm Password" formControlName="repeatedPassword" minlength="6" required>
+		<mat-icon matPrefix>lock</mat-icon>
+		
+	</mat-form-field>
+	<mat-error *ngIf="checkPasswords()">The passwords must be the same</mat-error>
+	
+
+
+	<button mat-flat-button color="primary" [disabled]="!join.valid">Submit</button>
+	<a routerLink="/login" class="link">do you have an account already?</a>
 	</div>
+
 
 </form>
