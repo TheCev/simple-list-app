@@ -46,15 +46,19 @@ var path = require("path");
 //TODO CONFIG CORS
 //create connection
 typeorm_1.createConnection().then(function (connection) { return __awaiter(void 0, void 0, void 0, function () {
-    var app;
+    var corsOption, app;
     return __generator(this, function (_a) {
+        corsOption = {
+            origin: 'https://simple-list-app.herokuapp.com',
+            optionsSuccessStatus: 200
+        };
         app = express();
         //Settings
         app.set('port', process.env.PORT || 3000);
         //Middlewares
         app.use(express.json());
-        app.use(cors());
         app.use(express.static(path.join(__dirname, '../bin')));
+        app.use(cors(corsOption));
         app.use('/api', index_1.default);
         //Routes
         app.use('/*', function (req, res) {

@@ -11,6 +11,12 @@ import * as path from 'path'
 //create connection
 createConnection().then(async connection => {
 
+    //cors CONFIG
+    const corsOption = {
+        origin:'https://simple-list-app.herokuapp.com',
+        optionsSuccessStatus:200
+    }
+
     //create express app
     const app = express();
 
@@ -19,10 +25,9 @@ createConnection().then(async connection => {
 
     //Middlewares
     app.use(express.json())
-    app.use(cors())
     app.use(express.static(path.join(__dirname, '../bin')))
 
-    
+    app.use(cors(corsOption))
     app.use('/api',routes)
     //Routes
     app.use('/*', (req ,res ) => {

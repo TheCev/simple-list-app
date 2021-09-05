@@ -19,6 +19,6 @@
    "cli": {
       "entitiesDir": "build/entity",
       "migrationsDir": "build/migration",
-      "subscribersDir": "buils/subscriber"
+      "subscribersDir": "build/subscriber"
    }
 }
