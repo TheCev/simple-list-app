@@ -13,7 +13,7 @@ export class AuthController {
 
 		//if aren't send message
 		if(!(username && password)){
-			res.status(404).json({message:"username & password are required"})
+			return res.status(404).json({message:"username & password are required"})
 		}
 
 		const userRepository = getRepository(User)
@@ -23,21 +23,32 @@ export class AuthController {
 		try{
 			user = await userRepository.findOneOrFail({where:{username}})
 		}catch(e){
-			res.status(400).json({message:"Username or Password are incorrect"})
+			return res.status(400).json({message:"Username or Password are incorrect"})
 		}
 
 		//verify the password
-		if(!user.checkPassword(password)){
-			res.status(400).json({message:"Username or Password are incorrect"})
-		}else{
+		try{
+			const verifyPassword = await user.checkPassword(password)
+			if(!verifyPassword){
+				return res.status(400).json({message:"Username or Password are incorrect"})
+			}
+		}
+		catch(e){
+			return res.status(400).json({message:"Username or Password are incorrect"})
+		}
 
-			//create token and send it to the user
-			const token = jwt.sign({
+		//create token and send it to the user
+		const token = jwt.sign({
 				userId: user.id,
 				username: user.username
-			}, 'secret', { expiresIn: '1h'})
+			},
+			'secret',
+			{
+				expiresIn: '1h'
+			}
+		);
 
 			return res.json({message:'OK', token})
-		}
 	}
+	
 }

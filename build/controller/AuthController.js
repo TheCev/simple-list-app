@@ -44,14 +44,14 @@ var AuthController = /** @class */ (function () {
     function AuthController() {
     }
     AuthController.login = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, username, password, userRepository, user, e_1, token;
+        var _a, username, password, userRepository, user, e_1, verifyPassword, e_2, token;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _a = req.body, username = _a.username, password = _a.password;
                     //if aren't send message
                     if (!(username && password)) {
-                        res.status(404).json({ message: "username & password are required" });
+                        return [2 /*return*/, res.status(404).json({ message: "username & password are required" })];
                     }
                     userRepository = typeorm_1.getRepository(User_1.User);
                     _b.label = 1;
@@ -63,21 +63,27 @@ var AuthController = /** @class */ (function () {
                     return [3 /*break*/, 4];
                 case 3:
                     e_1 = _b.sent();
-                    res.status(400).json({ message: "Username or Password are incorrect" });
-                    return [3 /*break*/, 4];
+                    return [2 /*return*/, res.status(400).json({ message: "Username or Password are incorrect" })];
                 case 4:
-                    //verify the password
-                    if (!user.checkPassword(password)) {
-                        res.status(400).json({ message: "Username or Password are incorrect" });
+                    _b.trys.push([4, 6, , 7]);
+                    return [4 /*yield*/, user.checkPassword(password)];
+                case 5:
+                    verifyPassword = _b.sent();
+                    if (!verifyPassword) {
+                        return [2 /*return*/, res.status(400).json({ message: "Username or Password are incorrect" })];
                     }
-                    else {
-                        token = jwt.sign({
-                            userId: user.id,
-                            username: user.username
-                        }, 'secret', { expiresIn: '1h' });
-                        return [2 /*return*/, res.json({ message: 'OK', token: token })];
-                    }
-                    return [2 /*return*/];
+                    return [3 /*break*/, 7];
+                case 6:
+                    e_2 = _b.sent();
+                    return [2 /*return*/, res.status(400).json({ message: "Username or Password are incorrect" })];
+                case 7:
+                    token = jwt.sign({
+                        userId: user.id,
+                        username: user.username
+                    }, 'secret', {
+                        expiresIn: '1h'
+                    });
+                    return [2 /*return*/, res.json({ message: 'OK', token: token })];
             }
         });
     }); };
