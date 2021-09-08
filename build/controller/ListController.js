@@ -158,12 +158,10 @@ var ListController = /** @class */ (function () {
                     return [4 /*yield*/, listRepository.save(list)];
                 case 3:
                     _a.sent();
-                    res.send('List edited');
-                    return [3 /*break*/, 5];
+                    return [2 /*return*/, res.status(200).json({ message: 'list edited' })];
                 case 4:
                     e_4 = _a.sent();
-                    res.status(404).json({ message: "list not found" });
-                    return [3 /*break*/, 5];
+                    return [2 /*return*/, res.status(404).json({ message: "list not found" })];
                 case 5: return [2 /*return*/];
             }
         });

@@ -89,10 +89,10 @@ export class ListController {
 			//save the list
 			list.title = title
 			await listRepository.save(list)
-			res.send('List edited')
+			return res.status(200).json({message:'list edited'})
 
 		}catch(e){
-			res.status(404).json({message:"list not found"})
+			return res.status(404).json({message:"list not found"})
 		}
 	}
 	//Method obtain by userId

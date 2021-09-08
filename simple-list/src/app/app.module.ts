@@ -8,20 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { MaterialModule } from './material.module'
 
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import { PageNotFoundComponent } from './routes/page-not-found/page-not-found.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { HomeComponent } from './routes/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    PageNotFoundComponent,
-    FooterComponent,
-    HomeComponent,
-
+    HeaderComponent
 
   ],
   imports: [
@@ -29,9 +22,7 @@ import { HomeComponent } from './routes/home/home.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule,
-    HttpClientJsonpModule
-   
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

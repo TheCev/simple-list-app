@@ -1,0 +1,13 @@
+<mat-action-list class="container" *ngIf="load">
+	<div class="flexbox" *ngFor="let list of items">
+
+    		<button mat-list-item routerLink="tasks/{{list.id}}">
+    			<div class="mat-list-item-text" >{{list.title}}</div>
+    	 	</button>
+    
+    		<app-options-button [itemId]="list.id" (deleteItem)="openDeleteDialog($event)" (editItem)="openEditDialog($event)"></app-options-button>
+
+    	</div>
+  <mat-list-item disabled *ngIf="!items.length"> <h5 style="text-align:center">There aren't lists</h5></mat-list-item>
+</mat-action-list>
+<mat-spinner *ngIf="!load"></mat-spinner>

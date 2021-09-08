@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from 'src/app/routes/page-not-found/page-not-found.component'
-import { CheckLoginGuard } from './guards/check-login.guard';
-import { CheckUnLoginGuard } from './guards/check-unlogin.guard';
-import { HomeComponent } from './routes/home/home.component';
+import { CheckLoginGuard } from './core/guards/check-login.guard';
+import { CheckUnLoginGuard } from './core/guards/check-unlogin.guard';
+
 const routes: Routes = [
 	{
-		path: '', component: HomeComponent, canActivate:[CheckLoginGuard]
+		path: '',loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate:[CheckLoginGuard]
 	},
 	{ 
-		path: 'lists', loadChildren: () => import('./routes/lists/lists.module').then(m => m.ListsModule),
+		path: 'lists', loadChildren: () => import('./modules/lists/lists.module').then(m => m.ListsModule),
 		canActivate:[CheckUnLoginGuard]
 	},
 	{
-		path: 'join', loadChildren: () => import('./routes/join/join.module').then(m => m.JoinModule),
+		path: 'join', loadChildren: () => import('./modules/join/join.module').then(m => m.JoinModule),
 		canActivate:[CheckLoginGuard] 
 	},
 	{ 
-		path: 'login', loadChildren: () => import('./routes/login/login.module').then(m => m.LoginModule),
+		path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
 		canActivate:[CheckLoginGuard] 
 	},
-	{
-		path:"**", component:PageNotFoundComponent
-	}
+	{ 
+		path: '**', loadChildren: () => import('./modules/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule) 
+	},
 ];
 
 @NgModule({
