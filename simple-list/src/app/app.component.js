@@ -14,7 +14,7 @@ var AppComponent = /** @class */ (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
-            template: "\n  \t\t\t<app-header></app-header>\n\t\t\t<router-outlet></router-outlet>\n\t\t\t<app-footer></app-footer>\n  ",
+            template: "\n  \t\t\t<app-header></app-header>\n\t\t\t<router-outlet></router-outlet>\n  ",
             styleUrls: ['./app.component.sass']
         })
     ], AppComponent);

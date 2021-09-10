@@ -1,1 +1,17 @@
-<p>list works!</p>
+<div class="container" *ngIf="load">
+
+
+	<app-progress-bar [tasksDone]="tasksDone.length" [totalTasks]="tasks.length"></app-progress-bar>
+	
+</div>
+<mat-selection-list  #tasksList *ngIf="load">
+			<div class="flexbox" *ngFor="let task of tasks">
+				<mat-list-option (click)="changeState(task)" selected="{{task.state}}" >
+					{{task.title}}
+				</mat-list-option>
+				
+				<app-options-button [itemId]="task.id" (editItem)="openEditTaskDialog(task.id)" (deleteItem)="deleteTask($event)"></app-options-button>
+			</div>
+</mat-selection-list>
+<mat-spinner *ngIf="!load"></mat-spinner>
+

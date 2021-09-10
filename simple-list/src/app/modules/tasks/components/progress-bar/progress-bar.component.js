@@ -17,11 +17,15 @@ var ProgressBarComponent = /** @class */ (function () {
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number)
-    ], ProgressBarComponent.prototype, "length", void 0);
+    ], ProgressBarComponent.prototype, "tasksDone", void 0);
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Number)
+    ], ProgressBarComponent.prototype, "totalTasks", void 0);
     ProgressBarComponent = __decorate([
         core_1.Component({
             selector: 'app-progress-bar',
-            template: "<mat-progress-bar mode=\"determinate\" color=\"warn\" [value]=\"length\" >\n  \t\t\t</mat-progress-bar>",
+            template: "\n <p class=\"text\">{{  tasksDone +\"/\"+ totalTasks || 0}}</p>\n<mat-progress-bar mode=\"determinate\" color=\"warn\" [value]=\"(tasksDone / totalTasks) * 100\" >\n </mat-progress-bar>",
             styles: ['']
         })
     ], ProgressBarComponent);

@@ -201,6 +201,38 @@ var TaskController = /** @class */ (function () {
             }
         });
     }); };
+    //Method edit task title
+    TaskController.editTask = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var id, title, taskRepository, task, e_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    id = req.params.id;
+                    title = req.body.title;
+                    taskRepository = typeorm_1.getRepository(Task_1.Task);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 4, , 5]);
+                    return [4 /*yield*/, taskRepository.findOneOrFail(id)
+                        //edit the title
+                    ];
+                case 2:
+                    task = _a.sent();
+                    //edit the title
+                    task.title = title;
+                    return [4 /*yield*/, taskRepository.save(task)];
+                case 3:
+                    _a.sent();
+                    return [3 /*break*/, 5];
+                case 4:
+                    e_4 = _a.sent();
+                    return [2 /*return*/, res.status(400).json({ message: 'have ocurred an error' })];
+                case 5: 
+                //sucessfully
+                return [2 /*return*/, res.status(200).json({ message: 'task edited' })];
+            }
+        });
+    }); };
     return TaskController;
 }());
 exports.TaskController = TaskController;

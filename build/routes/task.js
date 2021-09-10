@@ -19,5 +19,7 @@ router.get('/user/:userId/list/:listId', jwt_1.checkJwt, TaskController_1.TaskCo
 router.delete('/:id', jwt_1.checkJwt, TaskController_1.TaskController.deleteTask);
 //change task state
 router.put('/:id/state', jwt_1.checkJwt, TaskController_1.TaskController.changeState);
+//edit a task
+router.put('/:id', jwt_1.checkJwt, TaskController_1.TaskController.editTask);
 //export router
 exports.default = router;

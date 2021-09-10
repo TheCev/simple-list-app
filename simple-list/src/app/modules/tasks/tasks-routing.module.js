@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TasksRoutingModule = void 0;
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var tasks_component_1 = require("./components/tasks.component");
+var tasks_component_1 = require("./components/tasks/tasks.component");
 var routes = [{ path: '', component: tasks_component_1.TasksComponent }];
 var TasksRoutingModule = /** @class */ (function () {
     function TasksRoutingModule() {

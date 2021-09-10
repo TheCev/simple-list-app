@@ -15,7 +15,6 @@ var animations_1 = require("@angular/platform-browser/animations");
 var header_component_1 = require("./shared/components/header/header.component");
 var material_module_1 = require("./material.module");
 var http_1 = require("@angular/common/http");
-var footer_component_1 = require("./shared/components/footer/footer.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -23,8 +22,7 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [
                 app_component_1.AppComponent,
-                header_component_1.HeaderComponent,
-                footer_component_1.FooterComponent,
+                header_component_1.HeaderComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,

@@ -30,6 +30,9 @@ import { EditListDialogComponent } from './components/edit-list-dialog/edit-list
     ListsRoutingModule,
     MaterialModule,
     SharedModule
+  ],
+  exports: [
+  AddButtonComponent
   ]
 })
 export class ListsModule { }

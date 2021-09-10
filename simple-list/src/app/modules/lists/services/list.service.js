@@ -24,7 +24,6 @@ var ListService = /** @class */ (function () {
     function ListService(http, api) {
         this.http = http;
         this.api = api;
-        //Properties
         //handle the comunication with events click, between the list component and the button component
         this.addListEvent = new rxjs_1.Subject();
         this.apiUrl = this.api.apiUrl; //get the api url

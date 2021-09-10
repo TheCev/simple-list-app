@@ -24,8 +24,6 @@ export class ListService {
 		private api: ApiRestService
 		) { }
 
-	//Properties
-
 	//handle the comunication with events click, between the list component and the button component
 	private addListEvent = new Subject<any>()
 	private apiUrl:string = this.api.apiUrl //get the api url

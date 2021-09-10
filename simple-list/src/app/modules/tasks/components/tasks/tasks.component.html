@@ -1,0 +1,14 @@
+
+<div class="container">
+	<h1 class="list-title">{{list.title}}</h1>
+</div>
+
+
+
+<div class="container">
+	 <app-list [listId]="listId"></app-list>
+</div>
+<div class="container">
+	<app-add-button (click)="handleAddTask()" ></app-add-button>
+</div>
+

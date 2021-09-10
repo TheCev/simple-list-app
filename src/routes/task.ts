@@ -20,6 +20,8 @@ router.get('/user/:userId/list/:listId',checkJwt,TaskController.getByListId)
 router.delete('/:id',checkJwt, TaskController.deleteTask)
 //change task state
 router.put('/:id/state',checkJwt, TaskController.changeState)
+//edit a task
+router.put('/:id',checkJwt, TaskController.editTask)
 
 //export router
 export default router

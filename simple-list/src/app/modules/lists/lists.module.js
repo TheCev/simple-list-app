@@ -36,6 +36,9 @@ var ListsModule = /** @class */ (function () {
                 lists_routing_module_1.ListsRoutingModule,
                 material_module_1.MaterialModule,
                 shared_module_1.SharedModule
+            ],
+            exports: [
+                add_button_component_1.AddButtonComponent
             ]
         })
     ], ListsModule);

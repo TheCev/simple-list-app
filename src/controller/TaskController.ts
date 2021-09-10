@@ -126,4 +126,26 @@ export class TaskController {
 		await taskRepository.save(task)
 		res.status(200).json({message:'task state changed'})
 	}
+	//Method edit task title
+	static editTask = async(req:Request, res:Response, next:NextFunction) => {
+		//extract values
+		const { id } = req.params
+		const { title } = req.body
+
+		const taskRepository = getRepository(Task)
+
+		let task:Task
+		//try to find the task and edit the title, if occurr an error, report it.
+		try{
+			task = await taskRepository.findOneOrFail(id)
+			//edit the title
+			task.title = title
+			await taskRepository.save(task)
+		}catch(e){
+			return res.status(400).json({message: 'have ocurred an error'})
+		}
+
+		//sucessfully
+		return res.status(200).json({message: 'task edited'})
+	}
 }
