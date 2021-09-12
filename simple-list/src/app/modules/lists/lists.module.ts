@@ -11,10 +11,9 @@ import { AddButtonComponent } from 'src/app/shared/components/add-button/add-but
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 
 import { ListComponent } from './components/list/list.component';
-
+import { ReactiveFormsModule } from '@angular/forms'
 import {SharedModule} from 'src/app/shared/shared.module';
 import { EditListDialogComponent } from './components/edit-list-dialog/edit-list-dialog.component'
-
 @NgModule({
   declarations: [
     ListsComponent,
@@ -29,7 +28,8 @@ import { EditListDialogComponent } from './components/edit-list-dialog/edit-list
     CommonModule,
     ListsRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   exports: [
   AddButtonComponent

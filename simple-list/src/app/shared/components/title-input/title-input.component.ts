@@ -1,31 +1,32 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms'
+import { Component, Output, EventEmitter, OnInit, Input } from '@angular/core';
+import { FormControl, Validators, FormGroupDirective, FormGroup } from '@angular/forms'
 
 @Component({
   selector: 'app-title-input',
   template: `
-		<mat-form-field>
-			<input matInput #title [formControl]="titleInput" (input)="sendTitle()" placeholder="Insert Title" />
-		</mat-form-field>
-
-		<mat-error *ngIf="checkTitleInput()">The title cannot be more than 40 characters</mat-error>
+			<mat-form-field>
+			<input matInput #title formControl="title" placeholder="Insert Title" />
+			</mat-form-field>
+		<!--<mat-error *ngIf="checkTitleInput()">The title cannot be more than 40 characters</mat-error>-->
   `,
   styles: ['']
 })
 export class TitleInputComponent implements OnInit {
 
-	@Output() title = new EventEmitter
-	@Output() inputInvalid = new EventEmitter
-  constructor() { }
+	@Input() form:FormGroup
+	title:FormControl = new FormControl('')
+	//@Output() title = new EventEmitter
+	//@Output() inputInvalid = new EventEmitter
 
-  ngOnInit(): void {
-  }
 
-  sendTitle():void {
+	ngOnInit():void{
+		this.form.addControl('title', this.title)
+	}
+  /*sendTitle():void {
   	this.title.emit(this.titleInput.value)
   }
 
-  titleInput = new FormControl('',[Validators.required, Validators.maxLength(40)])
+  titleInput:FormControl = new FormControl('',[Validators.required, Validators.maxLength(40)])
 
  checkTitleInput():boolean {
 
@@ -33,9 +34,14 @@ export class TitleInputComponent implements OnInit {
  		this.inputInvalid.emit(true)
   		return true
  	}else{
+ 		this.inputInvalid.emit(false)
  		return false
  	}
  	
-  }
+  }*/
+
+  //ngOnInit():void{
+  	//this.title = this.formGroupRoot.control.get('title') as FormControl
+ // }
 
 }
