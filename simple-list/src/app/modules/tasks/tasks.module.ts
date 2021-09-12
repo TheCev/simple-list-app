@@ -10,7 +10,8 @@ import { ListComponent } from './components/list/list.component'
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ListsModule} from 'src/app/modules/lists/lists.module';
 import { EditTaskDialogComponent } from './components/edit-task-dialog/edit-task-dialog.component'
-import {ReactiveFormsModule} from '@angular/forms'
+import {ReactiveFormsModule} from '@angular/forms';
+import { ListItemComponent } from './components/list-item/list-item.component'
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {ReactiveFormsModule} from '@angular/forms'
     AddTaskDialogComponent,
     ListComponent,
     EditTaskDialogComponent,
+    ListItemComponent,
   ],
   imports: [
     CommonModule,

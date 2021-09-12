@@ -1,17 +1,24 @@
-<div class="container" *ngIf="load">
-
-
-	<app-progress-bar [tasksDone]="tasksDone.length" [totalTasks]="tasks.length"></app-progress-bar>
-	
-</div>
+<!-- LIST -->
 <mat-selection-list  #tasksList *ngIf="load">
+			<!--PROGRESS BAR COMPONENT-->
+			<div class="container">
+				<app-progress-bar [tasksDone]="tasksList.selectedOptions.selected.length" [totalTasks]="tasks.length"></app-progress-bar>
+			</div>
+
 			<div class="flexbox" *ngFor="let task of tasks">
+				<!--LIST ITEM COMPONENT-->
 				<mat-list-option (click)="changeState(task)" selected="{{task.state}}" >
 					{{task.title}}
 				</mat-list-option>
-				
+				<!--OPTIONS BUTTON COMPONENT-->
 				<app-options-button [itemId]="task.id" (editItem)="openEditTaskDialog(task.id)" (deleteItem)="deleteTask($event)"></app-options-button>
 			</div>
 </mat-selection-list>
+<!--SPINNER COMPONENT-->
 <mat-spinner *ngIf="!load"></mat-spinner>
+<!--ADD BUTTON COMPONENT-->
+<div class="container">
+	<app-add-button (click)="openAddTaskDialog()" ></app-add-button>
+</div>
+
 

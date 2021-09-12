@@ -100,7 +100,7 @@ export class TasksService {
 	}
 
 	//change a state of one task
-	changeState(listId,task):Observable<any>{
+	changeState(task):Observable<any>{
 
 		let tasksUrl = this.apiUrl + `/tasks/${task.id}/state`
 		//return a observable from the http put method

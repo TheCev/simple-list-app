@@ -33,7 +33,6 @@ export class ListComponent implements OnInit {
   	private dialog: MatDialog
   	) {
   	this.subscriptions.add(this.tasksSvc.getAddTaskEvent().subscribe(() => {
-  		this.load = false
   		this.openAddTaskDialog()
   	}))
   }
@@ -139,9 +138,10 @@ export class ListComponent implements OnInit {
   	this.tasksDone = this.tasks.filter((task) => task.state)
   }
 
+  //change state method, indicate the state if done or not the task
   changeState(task):void {
-  	this.subscriptions
-  	.add(this.tasksSvc.changeState(this.listId, task).subscribe())
+  	this.subscriptions.
+    add(this.tasksSvc.changeState(task).subscribe())
   }
 
 }

@@ -10,8 +10,6 @@ import { ListService } from 'src/app/modules/lists/services/list.service';
     
   <app-list></app-list>
 
-  <app-add-button (click)="handleAddList()"></app-add-button>
-
 </div>
 
   `,
