@@ -1,13 +1,13 @@
+//Angular
 import { Component } from '@angular/core';
-import { ListService } from 'src/app/modules/lists/services/list.service';
 
 @Component({ 
   selector: 'app-lists',
   template:`
-
+<!--LISTS COMPONENT-->
 <div class="container">
   <h2 class="subtitle">To Do Lists </h2>
-    
+    <!--LIST COMPONENT-->
   <app-list></app-list>
 
 </div>
@@ -16,12 +16,4 @@ import { ListService } from 'src/app/modules/lists/services/list.service';
   styleUrls: ['./lists.component.sass']
 })
 
-export class ListsComponent {
-
-  constructor( private listSvc:ListService ) { }
-
-  handleAddList():void{
-    this.listSvc.sendAddListEvent()
-  }
-
-}
+export class ListsComponent { }

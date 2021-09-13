@@ -1,13 +1,13 @@
 <!-- LIST -->
-<mat-selection-list  #tasksList *ngIf="load">
+<mat-selection-list  #tasksList *ngIf="load" color="warning">
 			<!--PROGRESS BAR COMPONENT-->
-			<div class="container">
+			<div class="progress-bar">
 				<app-progress-bar [tasksDone]="tasksList.selectedOptions.selected.length" [totalTasks]="tasks.length"></app-progress-bar>
 			</div>
 
 			<div class="flexbox" *ngFor="let task of tasks">
 				<!--LIST ITEM COMPONENT-->
-				<mat-list-option (click)="changeState(task)" selected="{{task.state}}" >
+				<mat-list-option class="list-item" (click)="changeState(task)" selected="{{task.state}}" >
 					{{task.title}}
 				</mat-list-option>
 				<!--OPTIONS BUTTON COMPONENT-->

@@ -1,3 +1,4 @@
+<!--JOIN COMPONENT-->
 <div class="container">
 	<h2 class="title">
 		 Create an Account
@@ -7,40 +8,42 @@
 
 	<form  [formGroup]="join" (ngSubmit)="onJoin()">
 		<div class="container">
-		<mat-form-field appearance="fill" color="primary">
 
-		<mat-label>Username*</mat-label>
+			<!--USERNAME INPUT COMPONENT-->
+			<mat-form-field appearance="fill" color="primary">
+				<mat-label>Username*</mat-label>
+				<input type="text" matInput placeholder="Username" formControlName="username">
+				<mat-icon matPrefix>person</mat-icon>
+			</mat-form-field>
 
-		<input type="text" matInput placeholder="Username" formControlName="username">
-		<mat-icon matPrefix>person</mat-icon>
-	</mat-form-field>
-		<mat-error *ngIf="checkUsername()">The username require min 6 characters</mat-error>
-	
-		<mat-form-field appearance="fill">
-		<mat-label>Email*</mat-label>
-		<input type="email" matInput placeholder="Email" formControlName="email" required>
-		<mat-icon matPrefix>mail</mat-icon>
+			<mat-error *ngIf="checkUsername()">The username require min 6 characters</mat-error>
 		
-	</mat-form-field>
-	<mat-error *ngIf="checkEmail()">Insert a valid email</mat-error>
-	
-	
-		<mat-form-field appearance="fill">
-		<mat-label>Password*</mat-label>
-		<input type="password" matInput placeholder="Password" formControlName="password" minlength="6" required>
-		<mat-icon matPrefix>lock</mat-icon>
-	</mat-form-field>
+			<!--EMAIL INPUT COMPONENT-->
+			<mat-form-field appearance="fill">
+				<mat-label>Email*</mat-label>
+				<input type="email" matInput placeholder="Email" formControlName="email" required>
+				<mat-icon matPrefix>mail</mat-icon>
+			</mat-form-field>
 
-	<mat-form-field appearance="fill">
-		<mat-label>Confirm Password*</mat-label>
-		<input type="password" matInput placeholder="Confirm Password" formControlName="repeatedPassword" minlength="6" required>
-		<mat-icon matPrefix>lock</mat-icon>
-		
-	</mat-form-field>
-	<mat-error *ngIf="checkPasswords()">The passwords must be the same</mat-error>
+			<mat-error *ngIf="checkEmail()">Insert a valid email</mat-error>
 	
+			<!--PASSWORD INPUT COMPONENT-->
+			<mat-form-field appearance="fill">
+				<mat-label>Password*</mat-label>
+				<input type="password" matInput placeholder="Password" formControlName="password" minlength="6" required>
+				<mat-icon matPrefix>lock</mat-icon>
+			</mat-form-field>
 
+			<!--CONFIRM PASSWORD INPUT COMPONENT-->
+			<mat-form-field appearance="fill">
+				<mat-label>Confirm Password*</mat-label>
+				<input type="password" matInput placeholder="Confirm Password" formControlName="repeatedPassword" minlength="6" required>
+				<mat-icon matPrefix>lock</mat-icon>
+			</mat-form-field>
 
+			<mat-error *ngIf="checkPasswords()">The passwords must be the same</mat-error>
+
+			<!--SUBMIT BUTTON COMPONENT-->
 	<button mat-flat-button color="primary" [disabled]="!join.valid">Submit</button>
 	<a routerLink="/login" class="link">Do you have an account already?</a>
 	</div>

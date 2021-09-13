@@ -38,9 +38,6 @@ export class ListComponent implements OnInit {
 
   	) { 
   	this.load = false //load initialize in false, so active the spinner charger
-
-   	//handle the click on the add button component
-   	this.addNewList()
   }
 
 
@@ -51,19 +48,6 @@ export class ListComponent implements OnInit {
       duration: 3000
     })
 
-  }
-
-  //add a new list method
-  addNewList():void {
-
-  	//subscribe for get the click on the add button
-  	//add the subscription to the subscriptions array
-  	this.subscriptions
-  	.add(this.listSvc.getAddListEvent().subscribe(() => {
-  			//open the add list dialog
-  			this.openAddListDialog()
-  		})
-  	)
   }
   
   // delete a list method

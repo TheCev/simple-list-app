@@ -1,10 +1,13 @@
+//Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { JoinRoutingModule } from './join-routing.module';
+//Components
 import { JoinComponent } from './components/join/join.component';
+//Modules
+import { JoinRoutingModule } from './join-routing.module';
 import { MaterialModule } from 'src/app/material.module'
 import { ReactiveFormsModule } from '@angular/forms'
+
 @NgModule({
   declarations: [
     JoinComponent

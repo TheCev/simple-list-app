@@ -17,7 +17,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 		</div>
 		<div mat-dialog-actions>
 			<button mat-button (click)="onNoClick()">Cancel</button>
-			<button mat-button [mat-dialog-close]="titleInput.value" [disabled]="!titleInput.valid" >Edit Task</button>
+			<button mat-button [mat-dialog-close]="titleInput.value" [disabled]="!titleInput.valid" >Edit</button>
 		</div>`,
   styles: ['']
 })

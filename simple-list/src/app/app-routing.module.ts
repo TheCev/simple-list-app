@@ -19,6 +19,7 @@ const routes: Routes = [
 		path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
 		canActivate:[CheckLoginGuard] 
 	},
+	{ path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
 	{ 
 		path: '**', loadChildren: () => import('./modules/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule) 
 	},
