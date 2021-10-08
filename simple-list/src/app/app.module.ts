@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -10,19 +11,25 @@ import { MaterialModule } from './material.module'
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { PageNotFoundComponent } from 'src/app/modules/page-not-found/components/page-not-found/page-not-found.component'
+import {HomeModule} from 'src/app/modules/home/home.module'
+import {LoginModule} from 'src/app/modules/login/login.module'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    PageNotFoundComponent
 
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    HomeModule,
+    LoginModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

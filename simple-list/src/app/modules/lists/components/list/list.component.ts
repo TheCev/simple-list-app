@@ -13,6 +13,8 @@ import {AddListDialogComponent} from 'src/app/modules/lists/components/add-list-
 import {EditListDialogComponent} from 'src/app/modules/lists/components/edit-list-dialog/edit-list-dialog.component'
 // rxjs
 import { Subscription } from 'rxjs'
+//Routing
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-list',
@@ -20,7 +22,7 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./list.component.sass']
 })
 
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
 
 	//Properties
 
@@ -34,7 +36,8 @@ export class ListComponent implements OnInit {
 
   	private listSvc:ListService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute
 
   	) { 
   	this.load = false //load initialize in false, so active the spinner charger
@@ -42,10 +45,24 @@ export class ListComponent implements OnInit {
 
 
   //Open a snackBar method
-  	openSnackBar(message) {
+  	openSuccessfullySnackBar(message) {
 
     this.snackBar.open(message,'', {
-      duration: 3000
+      duration: 3500,
+      panelClass:['successfully-snack-bar'],
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center'
+    })
+
+  }
+
+  openWarningSnackBar(message) {
+
+    this.snackBar.open(message,'', {
+      duration: 3500,
+      panelClass:['warning-snack-bar'],
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
     })
 
   }
@@ -53,12 +70,21 @@ export class ListComponent implements OnInit {
   // delete a list method
   deleteList(id):void {
 
-  	//subscribe for the listSvc deleteList method
-  	// add the subscription to the subscriptions array
+  	//delete local lit
+    const index = this.items.findIndex((item) => item.id === id)
+    this.items.splice(index,1)
+
+    //delete list from server
+    //subscribe for the listSvc deleteList method
+    // add the subscription to the subscriptions array
     this.subscriptions
     .add(this.listSvc.deleteList(id).subscribe(() => {
-  			this.getLists() //refresh and show
-  		})
+  			 this.openSuccessfullySnackBar('Changes Saved, Has Been Deleted a List')
+  		},
+      error =>{
+              this.openWarningSnackBar('Failed Connection')
+            }
+      )
   	)    
     
   }
@@ -85,7 +111,12 @@ export class ListComponent implements OnInit {
     			//save through the listSvc sendList method
     			this.listSvc.sendList(userId, listTitle).subscribe(() => {
      				this.getLists()//refresh and show
-    			})
+             this.openSuccessfullySnackBar('Has Been Created a List')
+    			},
+          error =>{
+              this.openWarningSnackBar('Failed Connection')
+            }
+          )
   			}
    	 })
     )
@@ -111,10 +142,13 @@ export class ListComponent implements OnInit {
   	}
 
   	//open the edit dialog method
-  	openEditDialog(id):void {
+  	openEditDialog(id, oldTitle):void {
   		//open the edit list dialog component by the dialog open method
   		const dialogRef = this.dialog.open(EditListDialogComponent, {
-  			width:'300px'
+  			width:'300px',
+        data:{
+          oldTitle
+        }
   		})
 
   		//get the values after closed the edit list dialog component
@@ -132,32 +166,53 @@ export class ListComponent implements OnInit {
 
   	//Edit list method
   	editList(id,newTitle):void{
+
+      this.items.map((item) => {
+        if(item.id === id){
+          item.title = newTitle
+          console.log(item)
+        }
+      })
+
   		this.subscriptions
   		.add(this.listSvc.editList(id,newTitle).subscribe(() =>{
-  					this.getLists() //refresh and show
-  					}))
+  					this.openSuccessfullySnackBar('Changes Saved, Has Been Edited a List') //refresh and show
+  					},
+            error =>{
+              this.openWarningSnackBar('Failed Connection')
+            }
+            ))
   	}
 
   	//refresh and get lists then show them method
     getLists():void{
     	//get the userId
-    	const userId = JSON.parse(localStorage.getItem('user')).userId
    	 	this.load = false //active the spinner charger
    	 	//subscribe for the listSvc getLists method, so get the lists
    	 	// add the subscription to the subscriptions array
     	this.subscriptions
-    	.add(this.listSvc.getLists(userId).subscribe((lists) => {
+    	.add(this.listSvc.getLists().subscribe((lists) => {
       			this.items = lists //get the lists
       			this.load = true //desactive the spinner charger
-    		})
-		)
-    }
+    		},
+        (error) => {
+          this.openWarningSnackBar('Failed Connection, Please Refresh the Page')
+        })
+       )
+      }
+     
+    
 
 	//Lifecycle hooks
 
   	ngOnInit():void{
   	//initialize loading the lists
-  	this.getLists()
+    this.load = false
+  	this.subscriptions.add(this.route.data.subscribe(data => {
+      this.items = data.lists
+      console.log(data)
+      this.load = true
+    }))
 	}
 
 	ngOnDestroy():void{

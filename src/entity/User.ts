@@ -7,20 +7,19 @@ import { Task } from './Task'
 //Create Entity and export it
 //TODO generate foreigns keys and class-validator
 @Entity()
-@Unique(["username","email"])
 export class User {
 
     @PrimaryGeneratedColumn()
     id: number;
 
     
-    @Column()
+    @Column({unique:true})
     username: string;
 
     @Column()
     password: string;
 
-    @Column()
+    @Column({unique: true})
     @IsEmail()
     email: string;
 

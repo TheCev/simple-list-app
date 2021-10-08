@@ -10,6 +10,8 @@ import { Router } from '@angular/router'
 import { comparePasswords } from '../validators/join.validator'
 //Rxjs
 import { Subscription } from 'rxjs'
+//material components
+import {MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-join',
@@ -22,9 +24,9 @@ export class JoinComponent {
   //Properties
   //join form with the fields
   join = new FormGroup({
-    username : new FormControl('', [Validators.required, Validators.minLength(6)]),
+    username : new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]),
     email: new FormControl('', [Validators.email, Validators.required]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6) ]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]),
     repeatedPassword: new FormControl('',[Validators.required, Validators.minLength(6)])
   },{
     validators: comparePasswords
@@ -33,7 +35,8 @@ export class JoinComponent {
   //Dependencies injetion
   constructor(
     private authSvc: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
     ) { }
 
   //Methods
@@ -47,11 +50,29 @@ export class JoinComponent {
     return this.join.hasError('notEqual') && passwordInput.dirty && repeatedPasswordInput.dirty
   }
 
+  //verify the password minlength
+  checkPasswordMinLength():boolean {
+    const passwordInput = this.join.get('password')
+    return passwordInput.hasError('minlength') && passwordInput.dirty
+  }
+
+  //verify the password max length
+  checkPasswordMaxLength():boolean {
+    const passwordInput = this.join.get('password')
+    return passwordInput.hasError('maxlength') && passwordInput.dirty
+  }
+
   //verify the min minLength of the username
-  checkUsername():boolean {
+  checkUsernameMinLength():boolean {
 
     const usernameInput = this.join.get('username')
     return usernameInput.hasError('minlength') && usernameInput.dirty
+  }
+
+  //verify the max length of the username
+  checkUsernameMaxLength():boolean {
+    const usernameInput = this.join.get('username')
+    return usernameInput.hasError('maxlength') && usernameInput.dirty
   }
 
   //verify if is a valid email
@@ -61,14 +82,52 @@ export class JoinComponent {
     return emailInput.hasError('email') && emailInput.dirty
   }
 
+  openWarningSnackBar(message):void{
+    this.snackBar.open(message, '', {
+      duration: 3500,
+      panelClass:['warning-snack-bar'],
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+
+    })
+  }
+
+  openSuccessfullySnackBar(message):void {
+    this.snackBar.open(message, '', {
+      duration: 1500,
+      panelClass:['successfully-snack-bar'],
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    })
+  }
+
+  checkEmailExist:boolean = false
+
+  //check if the username already exist
+
   //on submit, send the data to the server
   onJoin():void{
     const data = this.join.value
     delete data.repeatedPassword
 
+    this.openSuccessfullySnackBar('Sending ...')
     this.authSvc.join(data).subscribe((res) => {
+
       if(res){
         this.router.navigate(['/login'])
+      }
+    },
+    err => {
+      console.log(err)
+      switch(err.message){
+        case "Email was used already":
+          this.openWarningSnackBar('Email Was Used Already')
+          break;
+        case "Username already exist":
+          this.openWarningSnackBar('Username Already Exist')
+          break;
+        default:
+          this.openWarningSnackBar('Failed Connection')
       }
     })
   }

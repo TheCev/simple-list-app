@@ -11,20 +11,27 @@ var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var options_button_component_1 = require("src/app/shared/components/options-button/options-button.component");
 var material_module_1 = require("src/app/material.module");
+var title_input_component_1 = require("./components/title-input/title-input.component");
+var forms_1 = require("@angular/forms");
+var succesfully_snackbar_component_1 = require("./components/succesfully-snackbar/succesfully-snackbar.component");
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
     SharedModule = __decorate([
         core_1.NgModule({
             declarations: [
-                options_button_component_1.OptionsButtonComponent
+                options_button_component_1.OptionsButtonComponent,
+                title_input_component_1.TitleInputComponent,
+                succesfully_snackbar_component_1.SuccesfullySnackbarComponent
             ],
             imports: [
                 common_1.CommonModule,
-                material_module_1.MaterialModule
+                material_module_1.MaterialModule,
+                forms_1.ReactiveFormsModule
             ],
             exports: [
-                options_button_component_1.OptionsButtonComponent
+                options_button_component_1.OptionsButtonComponent,
+                title_input_component_1.TitleInputComponent
             ]
         })
     ], SharedModule);

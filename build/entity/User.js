@@ -33,7 +33,7 @@ var User = /** @class */ (function () {
         __metadata("design:type", Number)
     ], User.prototype, "id", void 0);
     __decorate([
-        typeorm_1.Column(),
+        typeorm_1.Column({ unique: true }),
         __metadata("design:type", String)
     ], User.prototype, "username", void 0);
     __decorate([
@@ -41,7 +41,7 @@ var User = /** @class */ (function () {
         __metadata("design:type", String)
     ], User.prototype, "password", void 0);
     __decorate([
-        typeorm_1.Column(),
+        typeorm_1.Column({ unique: true }),
         class_validator_1.IsEmail(),
         __metadata("design:type", String)
     ], User.prototype, "email", void 0);
@@ -58,8 +58,7 @@ var User = /** @class */ (function () {
         __metadata("design:type", Array)
     ], User.prototype, "tasks", void 0);
     User = __decorate([
-        typeorm_1.Entity(),
-        typeorm_1.Unique(["username", "email"])
+        typeorm_1.Entity()
     ], User);
     return User;
 }());

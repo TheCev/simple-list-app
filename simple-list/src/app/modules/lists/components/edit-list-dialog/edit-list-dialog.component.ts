@@ -1,7 +1,8 @@
 //Angular
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 //material component
 import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA} from '@angular/material/dialog'
 //forms
 import {FormControl, Validators} from '@angular/forms'
 
@@ -30,10 +31,14 @@ export class EditListDialogComponent {
 	//Properties
 
 	//input
-	titleInput:FormControl = new FormControl('', [Validators.required, Validators.maxLength(40)])
+	titleInput:FormControl = new FormControl(this.data.oldTitle, [Validators.required, Validators.maxLength(40)])
 
 	//Dependencies Injection
-	constructor( public dialogRef: MatDialogRef<EditListDialogComponent> ) { }
+	constructor( 
+		public dialogRef: MatDialogRef<EditListDialogComponent>,
+		@Inject(MAT_DIALOG_DATA)  public data: { oldTitle:string }
+		 ) { }
+		
 
 	//Methods
 

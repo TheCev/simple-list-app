@@ -1,5 +1,5 @@
 //Angular
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 //Services
 import { TasksService } from 'src/app/modules/tasks/services/tasks.service';
 //Interfaces
@@ -15,12 +15,11 @@ import { Subscription } from 'rxjs'
   styleUrls: ['./tasks.component.sass']
 })
 
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
 
 	//Properties
 
-	listId:string;
-	list = { 'title':"" };
+	list!:List;
 	userId:number
 	private subscriptions = new Subscription()
 
@@ -31,18 +30,9 @@ export class TasksComponent implements OnInit {
 
 		) { 
 
-		this.userId = JSON.parse(localStorage.getItem('user')).userId
-	}
-
-
-	getList():void{
-
-		this.tasksSvc.getList(this.listId).subscribe((list) => {
-			this.list = list
-			
-		})
 
 	}
+
 
 	handleAddTask():void{
 		this.tasksSvc.sendAddTaskEvent()
@@ -50,13 +40,14 @@ export class TasksComponent implements OnInit {
 
 
 	ngOnInit(){
-		
-		this.route.params.subscribe(params => {
-			this.listId = params['listId']
-			this.getList()
+		this.subscriptions.add(this.route.data.subscribe(data => {
+			this.list = data.list
+		}) )
 
-		})
+	}
 
+	ngOnDestroy(){
+		this.subscriptions.unsubscribe()
 	}
 	
 }

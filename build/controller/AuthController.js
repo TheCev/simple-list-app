@@ -51,7 +51,7 @@ var AuthController = /** @class */ (function () {
                     _a = req.body, username = _a.username, password = _a.password;
                     //if aren't send message
                     if (!(username && password)) {
-                        return [2 /*return*/, res.status(404).json({ message: "username & password are required" })];
+                        return [2 /*return*/, res.status(404).json({ message: "email & password are required" })];
                     }
                     userRepository = typeorm_1.getRepository(User_1.User);
                     _b.label = 1;
@@ -79,7 +79,7 @@ var AuthController = /** @class */ (function () {
                 case 7:
                     token = jwt.sign({
                         userId: user.id,
-                        username: user.username
+                        username: user.email
                     }, 'secret', {
                         expiresIn: '1h'
                     });

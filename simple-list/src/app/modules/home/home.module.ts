@@ -6,6 +6,20 @@ import { HomeComponent } from './components/home/home.component';
 //Modules
 import { HomeRoutingModule } from './home-routing.module';
 import { MaterialModule } from 'src/app/material.module'
+//Routing
+import { RouterModule, Routes } from '@angular/router';
+//guards
+import { CheckLoginGuard } from 'src/app/core/guards/check-login.guard'
+
+
+const homeRoutes: Routes = [
+	{
+		path:'',
+		component:HomeComponent,
+		pathMatch:'full',
+		canActivate:[CheckLoginGuard]
+	}
+]
 
 @NgModule({
   declarations: [
@@ -13,7 +27,7 @@ import { MaterialModule } from 'src/app/material.module'
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
+   	RouterModule.forChild(homeRoutes),
     MaterialModule
   ]
 })

@@ -15,7 +15,7 @@ router.post('/',UserController.newUser)
 router.get('/:id',checkJwt,UserController.getById)
 //delete user
 router.delete('/:id',checkJwt,UserController.deleteUser)
-
-//TODO EDIT USER
+//edit user
+router.put('/:id',checkJwt, UserController.editUser )
 //export router
 export default  router;

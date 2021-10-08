@@ -13,7 +13,7 @@ export class AuthController {
 
 		//if aren't send message
 		if(!(username && password)){
-			return res.status(404).json({message:"username & password are required"})
+			return res.status(404).json({message:"email & password are required"})
 		}
 
 		const userRepository = getRepository(User)
@@ -40,7 +40,7 @@ export class AuthController {
 		//create token and send it to the user
 		const token = jwt.sign({
 				userId: user.id,
-				username: user.username
+				username: user.email
 			},
 			'secret',
 			{

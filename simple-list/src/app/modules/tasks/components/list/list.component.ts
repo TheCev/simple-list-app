@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs'
 //Angular material components
 import { MatDialog } from '@angular/material/dialog'
+import { MatSnackBar } from '@angular/material/snack-bar'
+//components
 import { EditTaskDialogComponent } from 'src/app/modules/tasks/components/edit-task-dialog/edit-task-dialog.component'
 import { AddTaskDialogComponent } from 'src/app/modules/tasks/components/add-task-dialog/add-task-dialog.component'
 @Component({
@@ -16,10 +18,10 @@ import { AddTaskDialogComponent } from 'src/app/modules/tasks/components/add-tas
   styleUrls: ['./list.component.sass']
 })
 
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnDestroy {
 
 	//Properties
-	@Input() listId: string
+	@Input() listId: number
 	load:boolean = false
 	tasks: any[] = []
 	tasksDone:any[] = []
@@ -30,12 +32,9 @@ export class ListComponent implements OnInit {
   constructor(
   	private tasksSvc: TasksService,
   	private route: ActivatedRoute,
-  	private dialog: MatDialog
-  	) {
-  	this.subscriptions.add(this.tasksSvc.getAddTaskEvent().subscribe(() => {
-  		this.openAddTaskDialog()
-  	}))
-  }
+  	private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  	) {  }
 
   //Methods
 
@@ -55,6 +54,15 @@ export class ListComponent implements OnInit {
   			this.load = true
   		}))
   	}
+
+    openSucessfullySnackBar(message):void{
+      this.snackBar.open(message,'',{
+        duration:3500,
+        panelClass:['successfully-snack-bar'],
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center'
+      })
+    }
 
   	//
   	openAddTaskDialog():void{
@@ -78,27 +86,33 @@ export class ListComponent implements OnInit {
   		this.load = false
   		this.tasksSvc.sendTask(userId, this.listId, title).subscribe(() => {
   			this.showTasks()
+        this.openSucessfullySnackBar('Has been Added a Task')
   		})
   	}
 
   	//delete a task method
 	deleteTask(id):void{
 
-		this.load = false //activate the spinner
+    const index = this.tasks.findIndex((task) => task.id === id)
+
+    this.tasks.splice(index,1)
 
 		//add the Subscription to the subscriptions array component
 		//delete a task from the server
 		this.subscriptions
 		.add(this.tasksSvc.deleteTask(id).subscribe(task => {	
 			//refresh and show
-			this.showTasks()
+			this.openSucessfullySnackBar('Changes Saved, Has Been Deleted a Task')
 		
 		}))
 	}
 
-	openEditTaskDialog(id):void {
+	openEditTaskDialog(id, oldTitle):void {
 		const dialogRef = this.dialog.open(EditTaskDialogComponent, {
-			width:'300px'
+			width:'300px',
+      data:{
+          oldTitle
+        }
 		})
 
 		this.subscriptions
@@ -111,10 +125,16 @@ export class ListComponent implements OnInit {
 	}
 
 	editList(taskId,newTitle):void{
-		this.load = false
+
+		this.tasks.map((task) => {
+      if(task.id === taskId){
+        task.title = newTitle
+      }
+    })
+
 		this.subscriptions
 		.add(this.tasksSvc.editTask(taskId,newTitle).subscribe(() => {
-			this.showTasks()
+			this.openSucessfullySnackBar('Changes Saved, Has been Edited a Task')
 		}))
 	}
 
@@ -123,8 +143,17 @@ export class ListComponent implements OnInit {
   //LifeCycle hooks
 
   ngOnInit(): void {
+    this.load  = false
 
-  	this.showTasks()
+  	this.subscriptions.add(this.route.data
+      .subscribe( data => {
+        const tasks:any[] = data.tasks;
+        this.tasks = tasks
+        this.load = true
+        console.log(data)
+        console.log(tasks)
+        this.getTasksDone()
+      }))
 
   }
 

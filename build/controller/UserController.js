@@ -66,7 +66,7 @@ var UserController = /** @class */ (function () {
     }); };
     //Method create a new user
     UserController.newUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-        var _a, username, password, email, user, userRepository, e_1;
+        var _a, username, password, email, user, userRepository, e_1, emailIndex, usernameIndex;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
@@ -91,7 +91,17 @@ var UserController = /** @class */ (function () {
                     return [2 /*return*/, res.status(200).json({ message: 'user created' })];
                 case 3:
                     e_1 = _b.sent();
-                    res.status(401).json({ message: 'user already exist' });
+                    emailIndex = new RegExp(email);
+                    usernameIndex = new RegExp(username);
+                    if (emailIndex.test(e_1.sqlMessage)) {
+                        return [2 /*return*/, res.status(401).json({ message: 'Email was used already' })];
+                    }
+                    else if (usernameIndex.test(e_1.sqlMessage)) {
+                        return [2 /*return*/, res.status(401).json({ message: 'Username already exist' })];
+                    }
+                    else {
+                        return [2 /*return*/, res.status(401).json({ message: 'User already exist' })];
+                    }
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
             }
@@ -146,6 +156,34 @@ var UserController = /** @class */ (function () {
                     res.status(404).json({ message: "User not found" });
                     return [3 /*break*/, 4];
                 case 4: return [2 /*return*/];
+            }
+        });
+    }); };
+    //TODO EDIT USER
+    UserController.editUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var id, _a, username, email, userRepository, user, e_4;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    id = req.params.id;
+                    _a = req.body, username = _a.username, email = _a.email;
+                    userRepository = typeorm_1.getRepository(User_1.User);
+                    _b.label = 1;
+                case 1:
+                    _b.trys.push([1, 4, , 5]);
+                    return [4 /*yield*/, userRepository.findOneOrFail(id)];
+                case 2:
+                    user = _b.sent();
+                    user.username = username;
+                    user.email = email;
+                    return [4 /*yield*/, userRepository.save(user)];
+                case 3:
+                    _b.sent();
+                    return [2 /*return*/, res.status(200).json({ message: 'user edited' })];
+                case 4:
+                    e_4 = _b.sent();
+                    return [2 /*return*/, res.status(400).json({ message: 'user cannot be found' })];
+                case 5: return [2 /*return*/];
             }
         });
     }); };

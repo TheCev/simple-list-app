@@ -11,7 +11,6 @@ import * as path from 'path'
 //create connection
 createConnection().then(async connection => {
 
-    //cors CONFIG
     const corsOption = {
         origin:'https://simple-list-app.herokuapp.com',
         optionsSuccessStatus:200
@@ -29,7 +28,9 @@ createConnection().then(async connection => {
 
     app.use(cors(corsOption))
     app.use('/api',routes)
+    
     //Routes
+
     app.use('/*', (req ,res ) => {
         res.sendFile(path.join(__dirname, '../bin/index.html'))
     })

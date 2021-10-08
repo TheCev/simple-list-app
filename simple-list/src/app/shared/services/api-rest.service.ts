@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpErrorResponse  } from '@angular/common/http'
 import { throwError } from 'rxjs'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,12 +19,9 @@ export class ApiRestService {
 	
 	public handleError(error:HttpErrorResponse){
 		
-			if(error.error.message) console.error('An error ocurred: ', error.error.message )
+			console.error('An error ocurred: ', error.error )
 
-			window.alert( error.error.message )
-			 return throwError('SOMETHING BAD HAPPENED')
+			 return throwError(error.error)
 		
 	}
-
-  constructor() { }
 }

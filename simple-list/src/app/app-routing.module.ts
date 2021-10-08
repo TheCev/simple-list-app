@@ -1,32 +1,34 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, PreloadAllModules } from '@angular/router';
 import { CheckLoginGuard } from './core/guards/check-login.guard';
 import { CheckUnLoginGuard } from './core/guards/check-unlogin.guard';
+import { PageNotFoundComponent } from 'src/app/modules/page-not-found/components/page-not-found/page-not-found.component';
 
-const routes: Routes = [
+const appRoutes: Routes = [
 	{
-		path: '',loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate:[CheckLoginGuard]
+		path:'lists',
+		loadChildren: () => import ('./modules/lists/lists.module').then(m => m.ListsModule),
+		canActivate:[CheckUnLoginGuard],
+		canLoad:[CheckUnLoginGuard]
 	},
-	{ 
-		path: 'lists', loadChildren: () => import('./modules/lists/lists.module').then(m => m.ListsModule),
-		canActivate:[CheckUnLoginGuard]
+	/*{
+		path:'profile',
+		loadChildren: () => import ('./modules/profile/profile.module').then( m => m.ProfileModule),
+		canActivate:[CheckUnLoginGuard],
+		canLoad:[CheckUnLoginGuard]
+	},*/
+	{
+		path:'join',
+		loadChildren:() => import ('./modules/join/join.module').then(m => m.JoinModule),
+		canActivate:[CheckLoginGuard]
 	},
 	{
-		path: 'join', loadChildren: () => import('./modules/join/join.module').then(m => m.JoinModule),
-		canActivate:[CheckLoginGuard] 
-	},
-	{ 
-		path: 'login', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
-		canActivate:[CheckLoginGuard] 
-	},
-	{ path: 'profile', loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule) },
-	{ 
-		path: '**', loadChildren: () => import('./modules/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule) 
-	},
-];
+		path:'**', component:PageNotFoundComponent
+	}
+]
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(appRoutes,{preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -4,29 +4,50 @@
   <span class="spacer">
   </span>
 
-  <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="!isLogged; else viewLogout">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
 
     <mat-icon>menu</mat-icon>
   </button>
 
   <mat-menu #menu="matMenu">
-    <div >
+    <div *ngIf="!isLogged; else viewLogout" >
+
+      <button mat-menu-item routerLink="/">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </button>
 
      <button mat-menu-item routerLink="/login">
+      <mat-icon>login</mat-icon>
         <span>Log In</span>
       </button>
 
       <button mat-menu-item routerLink="/join">
+        <mat-icon>group_add</mat-icon>
         <span>Join us</span>
       </button>
+
     </div>
-    </mat-menu>
 
-  <ng-template #viewLogout>
-      <button mat-icon-button (click)="onLogout()">
-      
-      <mat-icon>logout</mat-icon>
+    <div>
+      <ng-template #viewLogout>
+       <!-- <button  mat-menu-item routerLink="/profile">
+          <mat-icon>account_circle</mat-icon>
+          <span>Profile</span>
+        </button>-->
 
-     </button>
-    </ng-template>
+        <button mat-menu-item routerLink="/lists">
+          <mat-icon>view_list</mat-icon>
+          <span>Lists</span>
+        </button>
+
+        <button mat-menu-item (click)="onLogout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log out</span>
+      </button>
+      </ng-template>
+    </div>
+  </mat-menu>
+
+  
 </mat-toolbar>  

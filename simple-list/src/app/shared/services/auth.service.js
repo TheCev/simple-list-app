@@ -34,10 +34,14 @@ var AuthService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    AuthService.prototype.handleError = function (error) {
+        console.log(error.error);
+        return rxjs_1.throwError(error.error);
+    };
     AuthService.prototype.join = function (authData) {
         var _this = this;
         return this.http.post(this.apiUrl + "/users/", authData)
-            .pipe(operators_1.catchError(function (err) { return _this.api.handleError(err); }));
+            .pipe(operators_1.catchError(function (err) { return _this.handleError(err); }));
     };
     AuthService.prototype.login = function (authData) {
         var _this = this;
@@ -51,7 +55,7 @@ var AuthService = /** @class */ (function () {
                 _this.loggedIn.next(true);
             }
             return res;
-        }), operators_1.catchError(function (err) { return _this.api.handleError(err); }));
+        }), operators_1.catchError(function (err) { return _this.handleError(err); }));
     };
     AuthService.prototype.saveToken = function (user, token) {
         localStorage.setItem('user', JSON.stringify(user));

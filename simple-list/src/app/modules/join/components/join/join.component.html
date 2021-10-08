@@ -8,7 +8,7 @@
 
 	<form  [formGroup]="join" (ngSubmit)="onJoin()">
 		<div class="container">
-
+			
 			<!--USERNAME INPUT COMPONENT-->
 			<mat-form-field appearance="fill" color="primary">
 				<mat-label>Username*</mat-label>
@@ -16,7 +16,9 @@
 				<mat-icon matPrefix>person</mat-icon>
 			</mat-form-field>
 
-			<mat-error *ngIf="checkUsername()">The username require min 6 characters</mat-error>
+			<mat-error *ngIf="checkUsernameMinLength()">The username require min 6 characters</mat-error>
+
+			<mat-error *ngIf="checkUsernameMaxLength()">The username cannot contain more than 30 characters</mat-error>
 		
 			<!--EMAIL INPUT COMPONENT-->
 			<mat-form-field appearance="fill">
@@ -24,7 +26,6 @@
 				<input type="email" matInput placeholder="Email" formControlName="email" required>
 				<mat-icon matPrefix>mail</mat-icon>
 			</mat-form-field>
-
 			<mat-error *ngIf="checkEmail()">Insert a valid email</mat-error>
 	
 			<!--PASSWORD INPUT COMPONENT-->
@@ -33,6 +34,9 @@
 				<input type="password" matInput placeholder="Password" formControlName="password" minlength="6" required>
 				<mat-icon matPrefix>lock</mat-icon>
 			</mat-form-field>
+
+			<mat-error *ngIf="checkPasswordMinLength()">The Password require min 6 characters</mat-error>
+			<mat-error *ngIf="checkPasswordMaxLength()">The password cannot contain more than 30 characters</mat-error>
 
 			<!--CONFIRM PASSWORD INPUT COMPONENT-->
 			<mat-form-field appearance="fill">

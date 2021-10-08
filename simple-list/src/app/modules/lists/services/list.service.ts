@@ -6,7 +6,7 @@ import {List} from 'src/app/modules/lists/interfaces/list.interface'; // import 
 import { HttpClient, HttpHeaders, HttpErrorResponse} from '@angular/common/http'
 //rxjs
 import {Observable, throwError, pipe, Subject, Subscription} from 'rxjs';
-import { catchError } from 'rxjs/operators'
+import { catchError, retry } from 'rxjs/operators'
 //Services
 import { ApiRestService } from 'src/app/shared/services/api-rest.service' //import the api service
 
@@ -64,10 +64,13 @@ export class ListService {
 	}
 
 	// get the lists of the user method
-  	getLists(userId):Observable<any>{
+  	getLists():Observable<any>{
+  		const userId = JSON.parse(localStorage.getItem('user')).userId
 		//get all the lists from the server throught the http get method
 		return this.http.get(`${this.apiUrl}/lists/user/${userId}`,this.httpOptions)
 		.pipe(
+			//retry request
+			retry(2),
 			//handle errors
 			catchError((err) => this.api.handleError(err))
 			)

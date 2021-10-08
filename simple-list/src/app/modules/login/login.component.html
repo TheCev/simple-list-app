@@ -1,25 +1,36 @@
+<!--LOGIN COMPONENT-->
 <div class="container">
 	<h2 class="title">Log in to your Account</h2>
 </div>
 <form action="" [formGroup]="login" (ngSubmit)="onLogin()">
 	
 	<div class="container">
-
+		<!--USERNAME INPUT COMPONENT-->
 		<mat-form-field appearance="fill" color="primary">
 			<mat-label>Username*</mat-label>
 			<input type="text" matInput placeholder="Username" formControlName="username">
 			<mat-icon matPrefix>person</mat-icon>
 		</mat-form-field>
-		<mat-error *ngIf="checkUsernameInput()">Username require min 6 characters</mat-error>
+			
+			<mat-error *ngIf="checkUsernameMinLength()">The username require min 6 characters</mat-error>
+
+			<mat-error *ngIf="checkUsernameMaxLength()">The username cannot contain more than 30 characters</mat-error>
+		
+
+		<!--PASSWORD INPUT COMPONENT-->
 		<mat-form-field appearance="fill">
 			<mat-label>Password*</mat-label>
 			<input type="password" matInput placeholder="Password" formControlName="password">
 			<mat-icon matPrefix>lock</mat-icon>
-
 		</mat-form-field>
-		<mat-error *ngIf="checkPasswordInput()">Password require min 6 characters</mat-error>
 
-		<button mat-flat-button color="primary" [disabled]="!login.valid">Submit</button>
+		<mat-error *ngIf="checkPasswordMinLength()">Password require min 6 characters</mat-error>
+		<mat-error *ngIf="checkPasswordMaxLength()">Password cannot contain more than 30 characters</mat-error>
+		<mat-error *ngIf="checkInputs">Password or Email incorrect</mat-error>
+
+		<!--LOGIN BUTTON COMPONENT-->
+		<button mat-flat-button color="primary" [disabled]="!login.valid">Log In</button>
+
 		<a routerLink="/join" class="link">Don't you have an account?</a>
 	</div>
 </form>

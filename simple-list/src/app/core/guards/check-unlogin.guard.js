@@ -20,6 +20,12 @@ var CheckUnLoginGuard = /** @class */ (function () {
         this.router = router;
     }
     CheckUnLoginGuard.prototype.canActivate = function () {
+        return this.checkLogin();
+    };
+    CheckUnLoginGuard.prototype.canLoad = function () {
+        return this.checkLogin();
+    };
+    CheckUnLoginGuard.prototype.checkLogin = function () {
         var _this = this;
         return this.authSvc.isLogged.pipe(operators_1.take(1), operators_1.map(function (isLogged) {
             if (isLogged) {

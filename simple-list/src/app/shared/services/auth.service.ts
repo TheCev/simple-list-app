@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import {Observable, throwError, BehaviorSubject } from 'rxjs'
-import { map, catchError } from 'rxjs/operators'
+import { map, catchError, retry } from 'rxjs/operators'
 import { UserResponse } from 'src/app/modules/lists/interfaces/list.interface'
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router'
@@ -13,6 +13,8 @@ const helper = new JwtHelperService();
   providedIn: 'root'
 })
 export class AuthService {
+
+
 
   private loggedIn = new BehaviorSubject<boolean>(false)
 
@@ -30,11 +32,16 @@ export class AuthService {
     this.checkToken()
   }
 
+  handleError(error:HttpErrorResponse):Observable<never>{
+    console.log(error.error)
+    return throwError(error.error)
+  }
+
 
   join(authData):Observable<any>{
     return this.http.post(`${this.apiUrl}/users/`, authData)
     .pipe(
-      catchError(err => this.api.handleError(err))
+      catchError(err => this.handleError(err))
       )
   }
 
@@ -58,7 +65,7 @@ export class AuthService {
            return res
 
   			}),
-        catchError((err) => this.api.handleError(err))
+        catchError((err) => this.handleError(err))
   			)
   		
   		

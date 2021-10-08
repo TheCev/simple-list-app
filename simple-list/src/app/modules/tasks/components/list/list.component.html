@@ -11,7 +11,7 @@
 					{{task.title}}
 				</mat-list-option>
 				<!--OPTIONS BUTTON COMPONENT-->
-				<app-options-button [itemId]="task.id" (editItem)="openEditTaskDialog(task.id)" (deleteItem)="deleteTask($event)"></app-options-button>
+				<app-options-button [itemId]="task.id" (editItem)="openEditTaskDialog(task.id, task.title)" (deleteItem)="deleteTask($event)"></app-options-button>
 			</div>
 </mat-selection-list>
 <!--SPINNER COMPONENT-->

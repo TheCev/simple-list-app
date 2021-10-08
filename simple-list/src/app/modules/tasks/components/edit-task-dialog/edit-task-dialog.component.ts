@@ -1,7 +1,8 @@
 //Angular
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 //Angular material component
 import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA} from '@angular/material/dialog'
 //forms
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 
@@ -27,10 +28,13 @@ export class EditTaskDialogComponent {
 	//Properties
 	//public invalid:boolean //if the title input is valid or not
  	//public title:string //the task title
- 	titleInput:FormControl =  new FormControl('', [Validators.required, Validators.maxLength(40)])
+ 	titleInput:FormControl =  new FormControl(this.data.oldTitle, [Validators.required, Validators.maxLength(40)])
  
 	//Dependencies injection
- constructor( public dialogRef: MatDialogRef<EditTaskDialogComponent>, private fb: FormBuilder ) { }
+ constructor( 
+ 	public dialogRef: MatDialogRef<EditTaskDialogComponent>,
+ 	@Inject(MAT_DIALOG_DATA) public data: { oldTitle: string}
+ 	) { }
 
 
  //Methods

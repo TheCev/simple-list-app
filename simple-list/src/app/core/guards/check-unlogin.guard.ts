@@ -3,11 +3,12 @@ import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators'
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { Router } from '@angular/router'
+import { Router, CanLoad } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
-export class CheckUnLoginGuard implements CanActivate {
+export class CheckUnLoginGuard implements CanActivate, CanLoad {
 
 	constructor(
 		private authSvc:AuthService,
@@ -15,18 +16,25 @@ export class CheckUnLoginGuard implements CanActivate {
 		){ }
 
   canActivate(): Observable<boolean> {
+    return this.checkLogin()
+  }
 
-    return this.authSvc.isLogged.pipe(
-    	take(1),
-    	map((isLogged: boolean) => {
-    		if(isLogged){
-    			return true
-    		}else{
-    			this.router.navigate(['/login'])
-    			return false
-    		}
-    	})
-    	)
+  canLoad():Observable<boolean> {
+    return this.checkLogin()
+  }
+
+  checkLogin():Observable<boolean>{
+     return this.authSvc.isLogged.pipe(
+      take(1),
+      map((isLogged: boolean) => {
+        if(isLogged){
+          return true
+        }else{
+          this.router.navigate(['/login'])
+          return false
+        }
+      })
+      )
   }
   
 }

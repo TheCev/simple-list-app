@@ -42,8 +42,18 @@ export class UserController {
 			await userRepository.save(user)
 			return res.status(200).json({message:'user created'})
 		}catch(e){
+			const emailIndex = new RegExp(email)
+			const usernameIndex = new RegExp(username)
+
+			if(emailIndex.test(e.sqlMessage)){
+				return res.status(401).json({message:'Email was used already'})
+			}else if(usernameIndex.test(e.sqlMessage)){
+				return res.status(401).json({message:'Username already exist'})
+			}else{
+				return res.status(401).json({message:'User already exist'})
+			}
+
 			
-			res.status(401).json({message:'user already exist'})
 		}
 	}
 	//Method obtain by id
@@ -83,4 +93,26 @@ export class UserController {
 	}
 
 	//TODO EDIT USER
+	static editUser = async (req:Request, res: Response, next: NextFunction) => {
+		//extract id from the request params
+		const { id } = req.params
+		//extract the new Username
+		const { username, email } = req.body
+
+		const userRepository = getRepository(User)
+
+		let user:User;
+
+		//verify if exist, if occurr an error notify
+		try{
+			user = await userRepository.findOneOrFail(id)
+			user.username = username
+			user.email = email
+			await userRepository.save(user)
+			return res.status(200).json({message:'user edited'})
+		}catch(e){
+			return res.status(400).json({message:'user cannot be found'})
+		}
+	}
+
 }

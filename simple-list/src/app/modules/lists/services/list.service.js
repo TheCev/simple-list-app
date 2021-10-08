@@ -59,11 +59,14 @@ var ListService = /** @class */ (function () {
         operators_1.catchError(function (err) { return _this.api.handleError(err); }));
     };
     // get the lists of the user method
-    ListService.prototype.getLists = function (userId) {
+    ListService.prototype.getLists = function () {
         var _this = this;
+        var userId = JSON.parse(localStorage.getItem('user')).userId;
         //get all the lists from the server throught the http get method
         return this.http.get(this.apiUrl + "/lists/user/" + userId, this.httpOptions)
             .pipe(
+        //retry request
+        operators_1.retry(2), 
         //handle errors
         operators_1.catchError(function (err) { return _this.api.handleError(err); }));
     };
